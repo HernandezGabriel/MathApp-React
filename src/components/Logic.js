@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 
+
+
 class Logic extends Component {
   constructor(props) {
     super(props);
@@ -21,12 +23,15 @@ class Logic extends Component {
     let right = this.randomNumber(10);
     let correctAnwser = left * right;
 
-    this.setState({ currentProblem: `${left} * ${right}` }); //special string ${holds variable}
-    this.setState({ currentCorrectAnswer: correctAnwser});
-    this.setState({ count: this.state.count+1});
+    this.setState({
+      currentProblem: `${left} * ${right}`,
+      currentCorrectAnswer: correctAnwser,
+      count: this.state.count + 1
+    },
+    this.getNewAnwsers(correctAnwser));
 
 
-    this.getNewAnwsers(left * right);
+
 
   }
 
@@ -38,20 +43,20 @@ class Logic extends Component {
     });
     list[correctSpot] = correctAnswer;
 
-    this.setState({choices: list});
+    this.setState({ choices: list });
 
   }
 
-  checkAnwser(spot){
+  checkAnwser(spot) {
     let answer = this.state.choices[spot];
 
-    if(answer===this.state.currentCorrectAnswer){
-      this.setState({ score: this.state.score+1 });
+    if (answer === this.state.currentCorrectAnswer) {
+      this.setState({ score: this.state.score + 1 });
     }
 
-    if(this.state.count==10){
-        this.setState({ keepGoing: false });
-    }else{
+    if (this.state.count === 10) {
+      this.setState({ keepGoing: false });
+    } else {
       this.getNewProblem();
     }
 
@@ -60,6 +65,16 @@ class Logic extends Component {
   componentDidMount() {
     this.getNewProblem();
   }
+
+  startOver() {
+    this.setState({
+      score: 0,
+      count: 0,
+      keepGoing: true
+    }, this.getNewProblem);
+  }
+
+
 
   render() {
     return (
@@ -77,13 +92,13 @@ class Logic extends Component {
           </section>
           {this.state.keepGoing && (<section id="answers" className="show-hide">
             <ul >
-              <li onClick={() => this.checkAnwser(0)}>{this.state.choices.at(0)}</li>
-              <li onClick={() => this.checkAnwser(1)}>{this.state.choices.at(1)}</li>
+              <li onClick={() => this.checkAnwser(0)}>{this.state.choices[0]}</li>
+              <li onClick={() => this.checkAnwser(1)}>{this.state.choices[1]}</li>
               <li onClick={() => this.checkAnwser(2)}>{this.state.choices.at(2)}</li>
               <li onClick={() => this.checkAnwser(3)} >{this.state.choices.at(3)}</li>
             </ul>
           </section>)}
-          <button id="btnStartOver">Start Over</button>
+          <button onClick={() => this.startOver()} id="btnStartOver">Start Over</button>
         </main>
       </>
     )
