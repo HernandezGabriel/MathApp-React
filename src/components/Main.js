@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Math from './Math';
+import Logic from './Logic';
 import './styles.css';
 
 class Main extends Component {
@@ -9,7 +9,7 @@ class Main extends Component {
         return(
         <>
         <Header />
-        <Math />       
+        <Logic />
         <Footer />
         </>
         )
